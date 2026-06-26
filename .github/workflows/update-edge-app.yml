@@ -1,0 +1,38 @@
+---
+name: Update Edge App
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - development
+      - main
+
+run-name: Updating Strava Club Leaderboard App in ${{ github.event_name == 'workflow_dispatch' && 'stage' || (github.ref == 'refs/heads/main' && 'production' || 'stage') }}
+
+jobs:
+  deploy-stage:
+    name: Updating Strava Club Leaderboard App in stage
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/development') || github.event_name == 'workflow_dispatch'
+    environment: stage
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Screenly/edge-apps-actions/update@v1
+        with:
+          screenly_api_token: ${{ secrets.SCREENLY_API_TOKEN }}
+          environment: stage
+          delete_missing_settings: 'true'
+
+  deploy-production:
+    name: Updating Strava Club Leaderboard App in production
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Screenly/edge-apps-actions/update@v1
+        with:
+          screenly_api_token: ${{ secrets.SCREENLY_API_TOKEN }}
+          environment: production
+          delete_missing_settings: 'true'
