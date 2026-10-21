@@ -1,3 +1,5 @@
+[![Version](https://img.shields.io/github/v/release/Screenly/strava-club-leaderboard-app)](https://github.com/Screenly/strava-club-leaderboard-app/releases/latest)
+
 # Strava Club Leaderboard Edge App
 
 A beautiful, real-time leaderboard for Strava clubs that displays member rankings based on activity data. Perfect for motivating team members and displaying club achievements on Screenly Players.
