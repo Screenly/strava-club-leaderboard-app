@@ -4,19 +4,23 @@
 
 A beautiful, real-time leaderboard for Strava clubs that displays member rankings based on activity data. Perfect for motivating team members and displaying club achievements on Screenly Players.
 
-![Strava Club Leaderboard](static/images/strava-club-leaderboard.png)
+![Strava Club Leaderboard, dark theme](screenshots/strava-club-leaderboard-app-dark-1920x1080.webp)
+
+![Strava Club Leaderboard, light theme](screenshots/strava-club-leaderboard-app-light-1920x1080.webp)
 
 ## Features
 
-- **Real-time leaderboard**: Displays club members ranked by total distance
-- **Comprehensive statistics**: Shows distance, time, elevation, and activity count
-- **Modern design**: Clean, responsive interface with smooth animations
-- **Auto-refresh**: Updates every 5 minutes automatically
-- **Automatic token refresh**: Seamlessly renews expired Strava tokens without interruption
-- **Caching**: Efficient data caching to reduce API calls
-- **Error handling**: Graceful error states with helpful messages
-- **Responsive**: Adapts to different screen sizes and resolutions
-- **Unit Type Configuration**: Users can choose whether to display units in Imperial or Metric.
+- **Podium and ranked list**: the top three on a podium, everyone else ranked below with a bar against the leader. As many rows as fit the screen, landscape or portrait.
+- **Per-sport ranking**: rank on running, cycling, swimming or walking and hiking, as Strava's own club leaderboards do, or on every sport together.
+- **The right average for the sport**: pace per km or mile for running and walking, pace per 100 m or 100 yd for swimming, speed for cycling, average distance for all sports.
+- **Dark and light themes**, metric or imperial units.
+- **Opens instantly**: the last leaderboard is kept on the screen and shown straight away. Strava is only asked again once it is older than 15 minutes, so a playlist that shows the app every few minutes doesn't spend API requests on every turn.
+- **Rate-limit aware**: when Strava's rate limit is reached the app keeps the last leaderboard on screen and waits until the limit resets (the next quarter hour, or midnight UTC for the daily limit) instead of retrying.
+- **Automatic token refresh**: the latest access and refresh tokens Strava issues are kept on the screen, so a reload doesn't start again from an expired token or lose a rotated refresh token.
+
+### What the numbers cover
+
+Strava's club activity feed doesn't include activity dates or athlete IDs. The leaderboard therefore covers the club's **latest activities** (up to 1,000), not a calendar week. Athletes are identified by first name and last initial, the only name Strava gives. Ranking is by distance; ties go to less moving time, then more elevation, then name.
 
 ## Prerequisites
 
@@ -112,6 +116,26 @@ screenly edge-app secret set client_secret=YOUR_CLIENT_SECRET
 
 # Set your Club ID
 screenly edge-app setting set club_id=YOUR_CLUB_ID
+```
+
+### Optional Settings
+
+| Setting         | Values                               | Default  |
+| --------------- | ------------------------------------ | -------- |
+| `activity_type` | `all`, `run`, `ride`, `swim`, `walk` | `all`    |
+| `theme`         | `dark`, `light`                      | `dark`   |
+| `unit_type`     | `metric`, `imperial`                 | `metric` |
+| `sentry_dsn`    | Sentry DSN for error reporting       | —        |
+
+## Development
+
+```bash
+bun install
+bun run dev          # local dev server (uses mock-data.yml)
+bun run test         # unit tests
+bun run test:e2e     # browser tests against a mocked Strava API
+bun run screenshots  # regenerate screenshots/
+bun run build        # production build in dist/
 ```
 
 ## Usage

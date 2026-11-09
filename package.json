@@ -1,0 +1,34 @@
+{
+  "name": "strava-club-leaderboard-app",
+  "version": "2.0.0",
+  "description": "A leaderboard of a Strava club's recent activities for Screenly screens.",
+  "type": "module",
+  "scripts": {
+    "prebuild": "bun run type-check",
+    "generate-mock-data": "screenly edge-app run --generate-mock-data",
+    "predev": "bun run generate-mock-data",
+    "dev": "edge-apps-scripts dev",
+    "build": "edge-apps-scripts build",
+    "build:dev": "edge-apps-scripts build:dev",
+    "build:prod": "edge-apps-scripts build",
+    "test": "bun test --pass-with-no-tests src/",
+    "test:unit": "bun test --pass-with-no-tests src/",
+    "test:e2e": "playwright test --config node_modules/@screenly/edge-apps/configs/playwright.js e2e/behaviour.spec.ts",
+    "lint": "edge-apps-scripts lint --fix",
+    "format": "prettier --write src/ e2e/ README.md index.html",
+    "format:check": "prettier --check src/ e2e/ README.md index.html",
+    "deploy": "bun run build && screenly edge-app deploy --path=dist/",
+    "type-check": "edge-apps-scripts type-check",
+    "screenshots": "edge-apps-scripts screenshots"
+  },
+  "prettier": "./.prettierrc.json",
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@screenly/edge-apps": "^26.8.0",
+    "@types/bun": "^1.4.4",
+    "@types/node": "^25.4.0",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.3"
+  },
+  "author": "Screenly, Inc."
+}
