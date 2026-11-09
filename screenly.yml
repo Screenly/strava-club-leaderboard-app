@@ -1,6 +1,6 @@
 ---
 syntax: manifest_v1
-description: Displays a leaderboard of Strava club activities.
+description: Displays a leaderboard of a Strava club's recent activities.
 icon: https://playground.srly.io/edge-apps/icons/strava-club-leaderboard.svg
 author: Screenly, Inc.
 categories:
@@ -14,6 +14,28 @@ settings:
     optional: false
     help_text: |
       Enter your Strava Access Token from https://www.strava.com/settings/api (keep this secure).
+  activity_type:
+    type: string
+    title: Sport
+    default_value: all
+    optional: true
+    help_text:
+      schema_version: 1
+      properties:
+        type: select
+        help_text: |
+          Rank athletes on one sport, the way Strava's own club leaderboards do, or on every activity together.
+        options:
+          - label: All sports
+            value: all
+          - label: Running
+            value: run
+          - label: Cycling
+            value: ride
+          - label: Swimming
+            value: swim
+          - label: Walking and hiking
+            value: walk
   client_id:
     type: string
     title: Strava Client ID
@@ -31,13 +53,36 @@ settings:
     title: Strava Club ID
     optional: false
     help_text: |
-      Enter the Strava club ID to display the leaderboard for. Find this in the club URL: https://www.strava.com/clubs/{club_id} (use lowercase letters).
+      Enter the numeric ID of the Strava club to display. Find it in the club URL: https://www.strava.com/clubs/{club_id}
   refresh_token:
     type: secret
     title: Strava Refresh Token
     optional: false
     help_text: |
       Enter your Strava Refresh Token from https://www.strava.com/settings/api (keep this secure).
+  sentry_dsn:
+    type: secret
+    title: Sentry Client Key
+    optional: true
+    is_global: true
+    help_text: |
+      Enter your Sentry DSN to enable error tracking and monitoring.
+  theme:
+    type: string
+    title: Theme
+    default_value: dark
+    optional: true
+    help_text:
+      schema_version: 1
+      properties:
+        type: select
+        help_text: |
+          Dark suits a gym, a clubhouse or a screen left on all evening; light suits a bright office or lobby.
+        options:
+          - label: Dark
+            value: dark
+          - label: Light
+            value: light
   unit_type:
     type: string
     title: Unit System
